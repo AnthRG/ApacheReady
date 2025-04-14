@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Listado de Estudiantes</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome para iconos -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Estilos personalizados -->
+    <style>
+
+
+        body {
+            background: linear-gradient(135deg, #383860, #000000);
+            min-height: 100vh; /* Hace que el contenido ocupe toda la pantalla */
+
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: #2b2b67;
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            background-color: #2b2b67;
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            background-color: #2b2b67;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .card-body {
+            border: none;
+            background-color: white;
+        }
+
+        .btn-custom {
+            background-color: #2b2b67;
+            color: white;
+            border: none !important;
+            border-radius: 5px;
+            padding: 10px 20px;
+            transition: background-color 0.3s ease;
+            outline: none !important; /* Evita cualquier borde de foco */
+            box-shadow: none !important; /* Evita sombras inesperadas */
+        }
+
+        .btn-custom:hover {
+            background-color: #1a1a3e;
+            color: white;
+        }
+
+        .btn-custom:focus,
+        .btn-custom:active {
+            outline: none !important;
+            box-shadow: none !important;
+            border: none !important;
+        }
+
+        /* Mantener estilos anteriores y agregar estos */
+        .hero-header {
+            background-color: #2b2b67;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+
+        .hero-header:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .title-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .header-icon {
+          color: white;
+          font-size: 2.5rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .header-title {
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .header-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            width: 60px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 2px;
+        }
+
+        .pagination {
+            background: transparent;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .pagination-dark .page-item .page-link {
+            background-color: #2b2b67;
+            color: white;
+            border-radius: 5px;
+            border: none;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+        }
+
+        .pagination-dark .page-item .page-link:hover {
+            background-color: #0056b3;
+        }
+
+        .pagination-dark .page-item.active .page-link {
+            background-color: #1a1a40;
+            color: white;
+            font-weight: bold;
+            border: none;
+        }
+
+        .pagination-dark .page-item.disabled .page-link {
+            background-color: #555;
+            color: #ccc;
+            cursor: not-allowed;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="container mt-4">
+    <!-- Header Mejorado -->
+    <div class="hero-header">
+        <div class="title-wrapper">
+            <i class=" fas fa-users header-icon"></i>
+            <h1 class="header-title" th:text="${titulo}">Encuestados</h1>
+        </div>
+        <!-- Opcional: Puedes agregar más elementos aquí -->
+        <div class="text-center mt-3">
+      <span class="badge badge-pill badge-light">
+        <i class="fas fa-user-alt mr-2"></i>
+        Total de estudiantes: <span th:text="${#lists.size(estudiantes)}">0</span>
+      </span>
+        </div>
+    </div>
+    <div class="row">
+        <!-- Iterar sobre la lista de estudiantes -->
+        <div class="col-md-4 mb-4" th:each="estudiante : ${estudiantes}">
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <i class="fas fa-user-alt"></i>Encuestado #<span th:text="${estudiante.id}"></span><span>: </span>
+                        <span class="card-title" th:text="${estudiante.nombre}"></span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        <strong>Sector:</strong> <span th:text="${estudiante.sector}"></span><br>
+                        <strong>Nivel Escolar:</strong> <span th:text="${estudiante.nivelEscolar}"></span>
+                    </p>
+                    <button type="button" class="btn btn-custom btn-block" data-toggle="modal" data-target="#detallesModal" th:attr="data-estudiante-id=${estudiante.id}">
+                        <i class="fas fa-info-circle"></i> Ver Detalles
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="detallesModal" tabindex="-1" aria-labelledby="detallesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detallesModalLabel">Encuestado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Nombre:</strong> <span id="modalNombre"></span></p>
+                <p><strong>Sector:</strong> <span id="modalSector"></span></p>
+                <p><strong>Nivel Escolar:</strong> <span id="modalNivelEscolar"></span></p>
+                <p><strong>Ubicación:</strong></p>
+                <div id="mapaEstudiante" style="width: 100%; height: 300px;"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center mt-4">
+    <ul class="pagination pagination-dark">
+        <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+            <a class="page-link btn-custom" th:href="@{/crud-estudiante(page=${currentPage - 1}, size=${size})}">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+        </li>
+        <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${i == currentPage} ? 'active'">
+            <a class="page-link btn-custom" th:href="@{/crud-estudiante(page=${i}, size=${size})}" th:text="${i}"></a>
+        </li>
+        <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+            <a class="page-link btn-custom" th:href="@{/crud-estudiante(page=${currentPage + 1}, size=${size})}">
+                <i class="fas fa-chevron-right"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    // Script para cargar los detalles del estudiante en el modal
+    $('#detallesModal').on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget); // Botón que activó el modal
+        const estudianteId = button.data('estudiante-id'); // Obtener el ID del estudiante
+
+        // Aquí puedes hacer una solicitud AJAX para obtener los detalles del estudiante
+        // y luego actualizar el contenido del modal.
+        // Por ahora, simulamos los datos:
+        const nombre = button.closest('.card').find('.card-title').text();
+        const sector = button.closest('.card').find('span').eq(0).text();
+        const nivelEscolar = button.closest('.card').find('span').eq(1).text();
+
+        // Actualizar el contenido del modal
+        $('#modalNombre').text(nombre);
+        $('#modalSector').text(sector);
+        $('#modalNivelEscolar').text(nivelEscolar);
+    });
+</script>
+<script>
+    function inicializarMapa() {
+        console.log("Google Maps cargado correctamente");
+    }
+
+    function cargarMapa(lat, lng) {
+        if (!lat || !lng) {
+            console.error("No hay coordenadas válidas para este encuestado.");
+            return;
+        }
+
+        var map = new google.maps.Map(document.getElementById('mapaEstudiante'), {
+            center: { lat: lat, lng: lng },
+            zoom: 14
+        });
+
+        // Crear un marcador con un ícono personalizado
+        new google.maps.Marker({
+            position: { lat: lat, lng: lng },
+            map: map,
+            title: "Ubicación del Encuestado",
+            icon: {
+                url: "https://maps.google.com/mapfiles/ms/icons/red-dot.png", // URL del ícono personalizado
+                scaledSize: new google.maps.Size(40, 40) // Tamaño del ícono
+            }
+        });
+    }
+
+    $('#detallesModal').on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget);
+        const estudianteId = button.data('estudiante-id');
+
+        fetch(`/api/estudiantes/${estudianteId}`) // 🔹 Se agregaron comillas invertidas (`` ` ``)
+            .then(response => response.json())
+            .then(data => {
+                $('#modalNombre').text(data.nombre);
+                $('#modalSector').text(data.sector);
+                $('#modalNivelEscolar').text(data.nivelEscolar);
+                cargarMapa(data.latitud, data.longitud);
+            })
+            .catch(error => console.error('Error cargando datos:', error));
+    });
+</script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9pfET0BwGbSpxr2o9Gy2wDk-kFHLVnvE&callback=inicializarMapa"></script>
+
+</body>
+</html>

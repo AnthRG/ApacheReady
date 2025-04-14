@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Registrar Estudiante</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/localforage/1.10.0/localforage.min.js"></script>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- FontAwesome para iconos -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <!-- Estilos personalizados -->
+  <style>
+    body {
+      background: linear-gradient(135deg, #383860, #000000);
+      min-height: 100vh; /* Hace que el contenido ocupe toda la pantalla */
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(+5px);
+      }
+      50% {
+        transform: translateY(-5px);
+      }
+    }
+
+    .container {
+      min-height: 100vh; /* Hace que el contenido ocupe toda la pantalla */
+      display: flex;
+      flex-direction: column;
+    }
+
+    .fa-user-plus{
+      font-size: 2.5rem;
+      animation: bounce 2s infinite;
+    }
+
+    .form-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      margin: 50px auto;
+    }
+    .form-container h2 {
+      color: #2b2b67;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .form-group label {
+      font-weight: bold;
+      color: #495057;
+    }
+    .form-control {
+      border-radius: 5px;
+      border: 1px solid #ced4da;
+      padding: 10px;
+    }
+    .form-control:focus {
+      border-color: #2b2b67;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+    .btn-custom {
+      background-color: #2b2b67;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .btn-custom:hover {
+      background-color: #1a1a3e;
+      transform: scale(1.05);
+      color: white;
+    }
+    .icon-input {
+      position: relative;
+    }
+    .icon-input i {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #2b2b67;
+    }
+
+    .icon-input select {
+      padding-left: 40px !important;
+      background-position: right 10px center;
+      background-size: 12px;
+    }
+
+    .icon-input input {
+      padding-left: 40px;
+    }
+
+    .form-control {
+      border-radius: 5px;
+      border: 1px solid #ced4da;
+      padding: 10px;
+      height: auto; /* Altura flexible */
+      min-height: 40px; /* Altura mínima */
+      overflow: visible; /* Evita recorte */
+    }
+
+
+
+  </style>
+</head>
+<body>
+<div class="form-container">
+  <h2><i class="fas fa-user-plus"></i> Registrar Estudiante</h2>
+  <form th:action="@{${accion}}" id="estudianteForm" method="post">
+    <!-- Campo Nombre -->
+    <div class="form-group icon-input">
+      <i class="fas fa-user"></i>
+      <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del Estudiante" required>
+    </div>
+    <!-- Campo Sector -->
+    <div class="form-group icon-input">
+      <i class="fas fa-map-marker-alt"></i>
+      <input type="text" class="form-control" id="sector" name="sector" placeholder="Sector" required>
+    </div>
+    <!-- Campo Nivel Escolar (modificado a combo box) -->
+    <div class="form-group icon-input">
+      <i class="fas fa-graduation-cap"></i>
+      <select class="form-control" id="nivelEscolar" name="nivelEscolar" required>
+        <option value="" disabled selected>Seleccione el nivel escolar</option>
+        <option value="Básico">Básico</option>
+        <option value="Medio">Medio</option>
+        <option value="Grado Universitario">Grado Universitario</option>
+        <option value="Postgrado">Postgrado</option>
+        <option value="Doctorado">Doctorado</option>
+      </select>
+    </div>
+    <!-- Campo Latitud longitud (hidden) -->
+    <input type="hidden" name="latitud" id="latitud">
+    <input type="hidden" name="longitud" id="longitud">
+    <!-- Botón de Envío -->
+    <button type="submit" class="btn btn-custom">
+      <i class="fas fa-save"></i> Guardar Estudiante
+    </button>
+  </form>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+  // Ejecutar al cargar la página
+  window.onload = function() {
+    getLocation();
+  };
+
+  function getLocation() {
+
+  }
+</script>
+<script src="/js/formulario-estudiante.js"></script>
+</body>
+</html>

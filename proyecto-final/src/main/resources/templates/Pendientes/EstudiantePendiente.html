@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registros Pendientes</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/localforage/1.10.0/localforage.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #383860, #000000);
+            min-height: 100vh;
+        }
+
+        .data-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 50px auto;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .btn-custom {
+            background-color: #2b2b67;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            color: white;
+            background-color: #1a1a40;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(+5px);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .ffa-sync {
+            animation: bounce 2s infinite;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Sección de Estudiantes Pendientes -->
+    <div class="data-container mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2><i class="fas fa-users-class ffa-sync fa-sync"></i> Estudiantes Pendientes</h2>
+                <p class="lead text-muted">Registros locales no sincronizados</p>
+            </div>
+            <button class="btn btn-custom" onclick="loadPendingRecordsDashboard()">
+                <i class="fas fa-sync"></i> Actualizar
+            </button>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-borderless">
+                <thead class="thead-light">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Sector</th>
+                    <th>Nivel Escolar</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody id="pendingStudentsList"></tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/localforage@1.10.0/dist/localforage.min.js"></script>
+
+<script src="/js/listaUsuariosPendientes.js"></script>
+
+</body>
+</html>

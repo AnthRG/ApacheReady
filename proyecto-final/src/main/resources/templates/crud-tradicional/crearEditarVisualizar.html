@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title th:text="${titulo}">...</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome para iconos -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #000;
+            --bg-secondary: #121212;
+            --accent: #9b59b6;
+            --accent-light: #be90d4;
+            --text-primary: #fff;
+            --text-secondary: #ccc;
+        }
+
+        body {
+            background: #000000;
+            min-height: 100vh;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(+5px);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 50px auto;
+        }
+
+        .form-container h2 {
+            color: var(--bg-primary);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .icon-input {
+            position: relative;
+        }
+
+        .icon-input i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--bg-primary);
+        }
+
+        .icon-input input,
+        .icon-input select {
+            padding-left: 40px !important;
+        }
+
+        .btn-custom {
+            background-color: var(--bg-primary);
+            color: white;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background-color: #323232;
+            transform: scale(1.05);
+            color: white;
+        }
+
+        .btn-secondary{
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover{
+            background-color: #323232;
+            transform: scale(1.05);
+            color: white;
+        }
+
+        .checkbox-group {
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        .fa-user-cog{
+            font-size: 2.5rem;
+            animation: bounce 2s infinite;
+        }
+
+        .current-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--bg-primary);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="form-container">
+        <h2><i class="fas fa-user-cog"></i> <span th:text="${titulo}">...</span></h2>
+
+        <form enctype="multipart/form-data" method="post" th:action="@{${accion}}">
+            <!-- Username -->
+            <div class="form-group icon-input">
+                <i class="fas fa-user-tag"></i>
+                <input th:readonly="${editaruser}"
+                       th:value="${usuario} ? ${usuario.username} : ''"
+                       type="text"
+                       name="username"
+                       class="form-control"
+                       placeholder="Nombre de usuario"
+                       id="usernameForm">
+            </div>
+
+            <!-- Nombre -->
+            <div class="form-group icon-input">
+                <i class="fas fa-id-card"></i>
+                <input th:readonly="${visualizar}"
+                       th:value="${usuario} ? ${usuario.nombre} : ''"
+                       type="text"
+                       name="nombre"
+                       class="form-control"
+                       placeholder="Nombre completo"
+                       id="nombreForm">
+            </div>
+
+            <!-- Contraseña -->
+            <div class="form-group icon-input">
+                <i class="fas fa-lock"></i>
+                <input th:readonly="${visualizar}"
+                       th:value="${usuario} ? ${usuario.password} : ''"
+                       type="password"
+                       name="password"
+                       class="form-control"
+                       placeholder="Contraseña"
+                       id="passwordForm">
+            </div>
+
+            <!-- Roles -->
+            <div class="checkbox-group">
+                <label class="font-weight-bold"><i class="fas fa-shield-alt mr-2"></i>Roles</label>
+                <div class="form-check">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           name="administrador"
+                           th:checked="${usuario != null} ? ${usuario.administrador} : false"
+                           th:disabled="${visualizar}"
+                           id="adminCheck">
+                    <label class="form-check-label" for="adminCheck">
+                        Administrador
+                    </label>
+                </div>
+            </div>
+
+            <!-- Foto de Perfil -->
+            <div class="form-group">
+                <label class="font-weight-bold"><i class="fas fa-camera mr-2"></i>Foto de Perfil</label>
+                <div class="custom-file">
+                    <input th:disabled="${visualizar}"
+                           type="file"
+                           name="foto"
+                           class="custom-file-input"
+                           id="fotoForm"
+                           accept=".jpg, .png, .jpeg">
+                    <label class="custom-file-label" for="fotoForm">Seleccionar archivo...</label>
+                </div>
+
+                <!-- Vista previa de la foto -->
+                <div class="mt-3 text-center">
+                    <img th:if="${usuario} ? ${usuario.foto != null}"
+                         th:src="'data:' + ${usuario.foto.mimeType} + ';base64,' + ${usuario.foto.fotoBase64}"
+                         class="current-photo"
+                         alt="Foto de perfil">
+                    <small th:if="${usuario} ? ${usuario.foto != null}"
+                           class="form-text text-muted d-block">Foto actual</small>
+                </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="form-group mt-4">
+                <button th:if="${!visualizar}"
+                        type="submit"
+                        class="btn btn-custom btn-lg btn-block">
+                    <i class="fas fa-save mr-2"></i>Guardar
+                </button>
+                <a href="/crud-simple/"
+                   class="btn btn-secondary btn-lg btn-block">
+                    <i class="fas fa-times-circle mr-2"></i>Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

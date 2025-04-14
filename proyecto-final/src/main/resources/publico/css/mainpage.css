@@ -1,0 +1,294 @@
+/* CSS Variables for the Dark Theme with Violet Accents */
+:root {
+    --bg-primary: #000;
+    --bg-secondary: #121212;
+    --section-darker: #0a0a0a;
+    --accent: #9b59b6;
+    --accent-light: #be90d4;
+    --text-primary: #fff;
+    --text-secondary: #ccc;
+}
+
+/* Global Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    padding-top: 70px;
+    margin: 0;
+}
+
+/* Modern Glassmorphism Navbar Styles */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1030;
+    background: rgba(18, 18, 18, 0.7);
+    backdrop-filter: saturate(180%) blur(10px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar-brand {
+    font-family: cursive;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--accent) !important;
+}
+
+.navbar-brand i {
+    margin-right: 0.5rem;
+}
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1030;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+.float-ghost {
+    animation: float 2.5s ease-in-out infinite;
+}
+
+.navbar-toggler {
+    border: none;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.navbar-nav .nav-item {
+    margin-left: 1rem;
+}
+
+.navbar-nav .nav-link {
+    font-size: 1rem;
+    color: var(--text-secondary) !important;
+    padding: 0.5rem 0;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    color: var(--accent) !important;
+    border-bottom: 2px solid var(--accent);
+}
+
+/* Hero Section */
+.hero-section {
+    min-height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+        url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 15px;
+}
+
+.hero-section h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+.hero-section p {
+    font-size: 1.25rem;
+    margin-bottom: 30px;
+    color: var(--text-secondary);
+}
+
+.hero-section .input-group {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.btn-accent {
+    background-color: var(--accent);
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-accent:hover {
+    background-color: var(--accent-light);
+}
+
+/* Section Styles */
+section {
+    padding: 60px 0;
+}
+
+.section-dark {
+    background-color: var(--bg-secondary);
+}
+
+.section-darker {
+    background-color: var(--section-darker);
+}
+
+.section-content {
+    text-align: center;
+}
+
+.section-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.section-content p {
+    font-size: 1.125rem;
+    margin-bottom: 40px;
+    color: var(--text-secondary);
+}
+
+/* Input Group Styles */
+.input-group .form-control {
+    border-right: 0;
+}
+
+.input-group .btn {
+    border-left: 0;
+}
+
+/* Footer */
+footer {
+    background-color: var(--bg-secondary);
+    padding: 20px 0;
+}
+
+footer p {
+    margin: 0;
+    color: var(--text-secondary);
+}
+.section-light {
+    background-color: #f9f9f9;
+}
+
+.text-accent {
+    color: #6f42c1; /* un violeta lindo */
+}
+
+.card-title a:hover {
+    text-decoration: underline;
+    color: #6f42c1;
+}
+#resultModal .modal-content {
+     border: 1px solid #dee2e6;
+     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+     border-radius: 0.3rem;
+}
+
+#resultModal .modal-header {
+     background-color: #f8f9fa; /* Fondo claro para la barra superior */
+     border-bottom: 1px solid #dee2e6;
+     padding: 1rem 1.5rem;
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+}
+
+#resultModal .modal-header h5 {
+      margin: 0;
+      font-size: 1.25rem;
+      color: #212529;
+}
+
+#resultModal .modal-header .btn-close {
+      opacity: 0.7;
+}
+
+#resultModal .modal-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column; /* Cambia a columna para mejor disposición */
+      align-items: center;
+      gap: 1.5rem;
+}
+
+#resultModal .modal-body .text-center {
+      text-align: center;
+}
+
+#resultModal .modal-body .text-purple {
+       color: #7b2cbf !important; /* Mantiene tu color morado */
+       font-weight: 600;
+       word-break: break-all;
+}
+
+#resultModal .modal-body img {
+        width: 120px;
+        height: 120px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+}
+
+#resultModal .modal-footer {
+        background-color: #f8f9fa;
+        border-top: 1px solid #dee2e6;
+        padding: 1rem 1.5rem;
+        text-align: center;
+        border-bottom-left-radius: 0; /
+        border-bottom-right-radius: 0
+
+}
+#urlPreview {
+        background-color: #1c1c1e;
+        border: 1px solid #7b2cbf;
+        color: #f1f1f1;
+}
+.card-link {
+        color: #9d4edd;
+}
+.card-link:hover {
+        text-decoration: underline;
+}
+.text-purple {
+        color: #9d4edd;
+}
+
+#previewDesc {
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* número de líneas */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-height: 4.5em;
+        margin-bottom: 1em;
+        color: white;
+}
+#previewImg {
+        height: 160px;
+        object-fit: cover;
+        border-top-left-radius: 18px;
+        border-top-right-radius: 18px;
+        width: 100%;
+}
+.preview-card {
+        width: 100%;
+        max-width: 600px;
+        border: 2px solid #9d4edd;
+        border-radius: 20px;
+        background-color: #1a1a1a;
+        overflow: hidden;
+}
+
+
+
+
+
+

@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "app.grpc";
+option java_outer_classname = "ServiceProto";
+
+message FotoMessage {
+  string id = 1;
+  string base64 = 2;
+}
+
+message UsuarioMessage {
+  string username = 1;
+  string nombre = 2;
+  string password = 3;
+  bool administrador = 4;
+  // Se puede ampliar para incluir datos de la foto si es necesario.
+  FotoMessage foto = 5;
+}
+
+message ShortUrlMessage {
+  string id = 1;
+  string originalUrl = 2;
+  string fecha = 3;      // Se maneja como String en formato ISO 8601.
+  int32 visitCount = 4;
+  UsuarioMessage creador = 5;
+  string qrCodeBase64 = 6;
+  string sessionId = 7;
+}
+
+message CreateShortUrlRequest {
+  string originalUrl = 1;
+  // Se utiliza UsuarioMessage para pasar el usuario creador.
+  UsuarioMessage creador = 2;
+}
+
+message CreateShortUrlResponse {
+  ShortUrlMessage shortUrl = 1;
+}
+
+message GetShortUrlRequest {
+  string id = 1;
+}
+
+message GetShortUrlResponse {
+  ShortUrlMessage shortUrl = 1;
+}
+
+message ListShortUrlsRequest {}
+
+message ListShortUrlsResponse {
+  repeated ShortUrlMessage shortUrls = 1;
+}
+
+service ShortUrlService {
+  rpc CreateShortUrl(CreateShortUrlRequest) returns (CreateShortUrlResponse);
+  rpc GetShortUrl(GetShortUrlRequest) returns (GetShortUrlResponse);
+  rpc ListShortUrls(ListShortUrlsRequest) returns (ListShortUrlsResponse);
+}

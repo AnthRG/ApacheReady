@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Registro</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Custom styles */
+    .bg-button {
+      background-color: #000000; /* Black button */
+    }
+    .bg-button:hover {
+      background-color: #292929; /* Dark gray on hover */
+    }
+
+    .bg-darker-green {
+      background-color: #000000; /* Black */
+    }
+
+    .bg-page {
+      background-color: #000000; /* Black */
+    }
+
+    .bg-box {
+      background-color: #ffffff; /* White */
+    }
+
+    .form-check-input:checked {
+      background-color: #000000; /* Black */
+      border-color: #ffffff; /* White border */
+    }
+
+    /* Custom form width */
+    .custom-form {
+      max-width: 400px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body class="bg-page d-flex align-items-center justify-content-center vh-100">
+<div class="bg-white p-5 rounded shadow-sm custom-form">
+  <h2 class="text-center mb-4 text-dark fw-bold">Registro</h2>
+  <form enctype="multipart/form-data" action="/registro" method="POST" class="needs-validation" novalidate>
+    <!-- Nombre -->
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre</label>
+      <input type="text" name="nombre" id="nombre" class="form-control" required>
+    </div>
+
+    <!-- Usuario -->
+    <div class="mb-3">
+      <label for="username" class="form-label">Usuario</label>
+      <input type="text" name="username" id="username" class="form-control" required>
+    </div>
+
+    <!-- Contraseña -->
+    <div class="mb-4">
+      <label for="password" class="">Contraseña</label>
+      <input type="password" name="password" id="password" class="form-control" required>
+    </div>
+
+    <div class="mb-4">
+      <label for="fotoForm">Foto de Perfil</label>
+      <input type="file" name="foto" class="form-control" id="fotoForm" accept=".jpg, .png, .jpeg">
+    </div>
+
+
+    <!-- Botón de Registro -->
+    <button type="submit" class="w-100 btn bg-button text-white rounded-lg py-2">Registrarse</button>
+  </form>
+  <p class="text-center mt-4 text-muted">
+    <a class="text-dark text-decoration-none">Tienes una cuenta?</a>
+    <a href="/login" class="link-secondary text-decoration-none">Inicia sección aqui!</a>
+  </p>
+
+</div>
+
+<!-- Bootstrap JS (optional) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

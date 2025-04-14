@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>SusLinks - URL Shortener & QR Codes</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="stylesheet" href="/css/mainpage.css"/>
+
+    <style>
+
+    </style>
+</head>
+<body>
+<!-- Navigation -->
+<nav id="mainNav" class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <i id="ghosty" class="fas fa-ghost float-ghost"></i>SusLinks
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <ul class="navbar-nav ms-auto align-items-center">
+            <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#hero">Shorten URL</a></li>
+            <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+
+            <li class="nav-item" th:if="${session.USUARIO == null}">
+                <a class="nav-link" href="/crud-url">Dashboard</a>
+            </li>
+            <li class="nav-item" th:if="${session.USUARIO == null}">
+                <a class="nav-link" href="/login">Log in</a>
+            </li>
+
+
+
+            <li class="nav-item dropdown" th:if="${session.USUARIO != null}">
+                <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    Account
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
+                    <li><a class="dropdown-item" href="/crud-url">Dashboard</a></li>
+                    <li><a class="dropdown-item" th:href="'/crud-simple/editar/'+${session.USUARIO.username}">Editar
+                        Usuario</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="/logout">Log Out</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section id="hero" class="hero-section">
+    <div class="container">
+        <h1>Shorten URLs & Generate QR Codes</h1>
+        <p>Simplify your links and share them effortlessly.</p>
+
+        <form enctype="multipart/form-data" class="input-group mt-4" action="/shorten" method="post">
+            <input type="text" name="url" class="form-control" placeholder="Enter your URL here"/>
+            <button class="btn btn-accent" type="submit">
+                Shorten <i class="fas fa-link ms-2"></i>
+            </button>
+        </form>
+
+        <!-- Vista previa -->
+        <div id="urlPreview" class="card d-none mt-4 mx-auto shadow preview-card">
+            <img id="previewImg" src="" class="card-img-top rounded-top" alt="Imagen del sitio">
+            <div class="card-body text-center">
+                <h5 id="previewTitle" class="card-title text-purple fw-bold"></h5>
+                <p id="previewDesc" class="card-text text-white"></p>
+                <a id="previewLink" href="#" target="_blank" class="card-link">Visitar sitio</a>
+            </div>
+        </div>
+
+        <a href="#qr" class="btn btn-outline-light mt-3">
+            Generate QR Code <i class="fas fa-qrcode ms-2"></i>
+        </a>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="section-darker">
+    <div class="container section-content">
+        <h2>Features</h2>
+        <p>Discover the powerful features designed to enhance your experience.</p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container text-center">
+        <p>&copy; 2025 SusLinks. All rights reserved.</p>
+    </div>
+</footer>
+
+<!-- Bootstrap Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Modal de resultado -->
+<div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content border-0 shadow rounded-3">
+            <div class="modal-header bg-light border-0">
+                <h5 class="modal-title" id="resultModalLabel">
+                    <i class="fas fa-ghost me-2"></i> ¡URL Acortado!
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body d-flex flex-column align-items-center justify-content-center gap-3">
+                <div class="text-center">
+                    <p class="mb-2 text-purple fw-semibold" id="shortUrlText"
+                       style="color: #7b2cbf; word-break: break-all;"></p>
+                </div>
+                <div>
+                    <img id="qrImage" src="" alt="QR Code" class="img-fluid" style="width: 100px; height: 100px;"/>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p class="mb-0">¡Espero lo disfrutes!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script para acortar -->
+<script>
+    document.querySelector('form[action="/shorten"]').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const url = this.querySelector('input[name="url"]').value;
+
+        const response = await fetch('/shorten', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({url: url})
+        });
+
+        const data = await response.json();
+        document.getElementById('shortUrlText').textContent = data.shortUrl;
+        document.getElementById('qrImage').src = data.qrCode;
+
+        const myModal = new bootstrap.Modal(document.getElementById('resultModal'));
+        myModal.show();
+    });
+
+    // Script para vista previa de URL
+    const urlInput = document.querySelector('input[name="url"]');
+    const previewCard = document.getElementById('urlPreview');
+    const titleEl = document.getElementById('previewTitle');
+    const descEl = document.getElementById('previewDesc');
+    const imgEl = document.getElementById('previewImg');
+    const linkEl = document.getElementById('previewLink');
+
+    let timeout = null;
+
+    urlInput.addEventListener('input', () => {
+        clearTimeout(timeout);
+        const url = urlInput.value.trim();
+
+        if (url.length < 5) {
+            previewCard.classList.add('d-none');
+            return;
+        }
+
+        timeout = setTimeout(() => {
+            fetch(`https://api.microlink.io?url=${encodeURIComponent(url)}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        const {title, description, image, url: finalUrl} = data.data;
+                        titleEl.textContent = title || 'Sin título';
+                        descEl.textContent = description || 'Sin descripción';
+                        imgEl.src = image?.url || '';
+                        linkEl.href = finalUrl || url;
+                        previewCard.classList.remove('d-none');
+                    } else {
+                        previewCard.classList.add('d-none');
+                    }
+                })
+                .catch(() => previewCard.classList.add('d-none'));
+        }, 700);
+    });
+</script>
+
+</body>
+</html>
