@@ -79,7 +79,8 @@ export MONGODB_URL="mongodb+srv://axrg0002:zKtiFY0qtxu9vdhy@finalpro.jhwraki.mon
 ./gradlew shadowjar
 
 # 🔹 Iniciar la app en segundo plano con la variable de entorno
-nohup java -jar build/libs/app.jar > build/libs/salida.txt 2> build/libs/error.txt &
+nohup env MONGODB_URL="mongodb+srv://axrg0002:zKtiFY0qtxu9vdhy@finalpro.jhwraki.mongodb.net/?retryWrites=true&w=majority&appName=FinalPro" \
+     java -jar build/libs/app.jar > build/libs/salida.txt 2> build/libs/error.txt &
 
 # 🔹 Asegurar puerto 50051 esté accesible (gRPC)
 echo "Asegurando acceso al puerto 50051 para gRPC..."
