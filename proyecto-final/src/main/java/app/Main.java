@@ -47,7 +47,7 @@ public class Main {
         resolver.setPrefix("templates/");  // SIN la barra inicial "/templates/"
         resolver.setSuffix(".html");
         resolver.setTemplateMode(TemplateMode.HTML);
-        resolver.setCacheable(false); //if cache no worky worky try turn this off
+        resolver.setCacheable(true); //if cache no worky worky try turn this off
         templateEngine.setTemplateResolver(resolver);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
