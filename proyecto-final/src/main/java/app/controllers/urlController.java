@@ -95,7 +95,7 @@ public class urlController {
         modelo.put("chartLabels", chartLabels);
         modelo.put("chartData", chartData);
         String domain = ctx.host();
-        String fullShortUrl = "http://" + domain + "/re/" + shortUrl.getId();
+        String fullShortUrl = "http://suslinks.sus.codes/re/" + shortUrl.getId();
         String qrBase64 = QRCodeGenerator.generateQRCodeBase64(fullShortUrl, 200, 200);
         modelo.put("fullUrl", fullShortUrl);
         modelo.put("qrBase64", qrBase64);
@@ -111,7 +111,7 @@ public class urlController {
 
         String shortId = generateShortId();
         String domain = ctx.host();
-        String fullShortUrl = "http://" + domain + "/re/" + shortId;
+        String fullShortUrl = "https://suslinks.sus.codes//re/" + shortId;
 
         String qrBase64 = QRCodeGenerator.generateQRCodeBase64(fullShortUrl, 200, 200);
         Usuario user = ctx.sessionAttribute("USUARIO");
