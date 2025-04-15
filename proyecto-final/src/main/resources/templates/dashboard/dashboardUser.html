@@ -309,42 +309,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    // Registro del Service Worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(reg => {
-          console.log("SW registrado:", reg.scope);
-        })
-        .catch(err => {
-          console.error("SW falló:", err);
-        });
-    }
-    async function cargarUrls() {
-  if (!navigator.onLine) {
-    // offline
-    const guardadas = localStorage.getItem('urlsLocal');
-    if (guardadas) {
-      mostrarLista(JSON.parse(guardadas));
-    } else {
-      alert("No hay datos offline guardados");
-    }
-    return;
-  }
-
-  try {
-    const token = localStorage.getItem('token');
-    const resp = await fetch('/api/urls', {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    if (!resp.ok) throw new Error(resp.statusText);
-
-    const data = await resp.json();
-    localStorage.setItem('urlsLocal', JSON.stringify(data.urls));
-    mostrarLista(data.urls);
-  } catch (e) {
-    console.log("Error cargando URLs:", e);
-  }
-}
 
 
     // Función para mostrar/ocultar el sidebar

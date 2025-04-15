@@ -4,6 +4,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>SusLinks - User Dashboard</title>
+
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <!-- Font Awesome -->
@@ -23,20 +24,15 @@
             --sidebar-expanded: 250px;
             --sidebar-collapsed: 70px;
         }
-
         body {
             background-color: var(--bg-primary);
             color: var(--text-primary);
             overflow-x: hidden;
         }
-
-        /* Main layout wrapper */
         .main-wrapper {
             display: flex;
             width: 100%;
         }
-
-        /* Sidebar Styles */
         .sidebar {
             background-color: var(--bg-secondary);
             min-height: 80vh;
@@ -44,25 +40,21 @@
             overflow: hidden;
             border-radius: 1rem;
             margin: 1rem;
-            flex-shrink: 0; /* Prevent sidebar from shrinking */
+            flex-shrink: 0;
             width: var(--sidebar-expanded);
         }
-
         .sidebar.expanded {
             width: var(--sidebar-expanded);
         }
-
         .sidebar.collapsed {
             width: var(--sidebar-collapsed);
         }
-
         .sidebar .brand {
             padding: 1rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
-
         .logop {
             display: flex;
             align-items: center;
@@ -72,7 +64,6 @@
             letter-spacing: 1px;
             color: var(--accent);
         }
-
         .sidebar .brand .logo {
             display: flex;
             align-items: center;
@@ -82,48 +73,34 @@
             letter-spacing: 1px;
             color: var(--accent);
         }
-
         .sidebar .brand .logo i {
             margin-right: 0.5rem;
             animation: float 2.5s ease-in-out infinite;
         }
-
+        @keyframes float {
+            0%   { transform: translateY(0); }
+            50%  { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
         .sidebar.collapsed .brand .logo span {
             display: none;
         }
-
         .sidebar.collapsed .brand .logo i {
             display: none;
         }
-
         .sidebar.collapsed .toggle-btn {
             position: fixed;
             margin-left: 5px;
             font-size: 2rem;
         }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-            100% {
-                transform: translateY(0);
-            }
-        }
-
         .sidebar ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-
         .sidebar li {
             padding: 0.8rem 1rem;
         }
-
         .sidebar li a {
             color: var(--text-secondary);
             display: flex;
@@ -133,77 +110,60 @@
             border-radius: 0.3rem;
             padding: 0.5rem;
         }
-
-        .sidebar li a:hover, .sidebar li a.active {
+        .sidebar li a:hover,
+        .sidebar li a.active {
             background-color: var(--accent);
             color: var(--text-primary);
         }
-
         .text-purple {
             color: var(--accent);
             font-weight: bold;
         }
-
         .bg-purple {
             background-color: var(--accent);
             color: var(--text-primary);
             font-weight: bold;
         }
-
         .sidebar li a span {
             margin-left: 1rem;
         }
-
-        /* Hide text labels when collapsed */
         .sidebar.collapsed li a span {
             display: none;
         }
-
-        /* Main Content */
         .content {
             flex-grow: 1;
-            flex-shrink: 1; /* Allow content to shrink */
-            min-width: 0; /* Important to allow shrinking below content size */
+            flex-shrink: 1;
+            min-width: 0;
             padding: 2rem;
             overflow-x: auto; /* Add horizontal scrolling for tables */
         }
-
-        /* Toggle button (placed within the brand area) */
         .toggle-btn {
             cursor: pointer;
             font-size: 1.5rem;
             color: var(--text-secondary);
         }
-
-        /* Responsive behavior */
         @media (max-width: 992px) {
             .content {
                 padding: 1rem;
             }
-
             .d-flex.justify-content-between {
                 flex-direction: column;
                 align-items: flex-start !important;
             }
-
             .d-flex.justify-content-between .btn {
                 margin-top: 1rem;
             }
         }
-
         @media (max-width: 768px) {
             .sidebar.expanded {
                 width: var(--sidebar-collapsed);
             }
-
             .sidebar.expanded .brand .logo span {
                 display: none;
             }
-
             .sidebar.expanded li a span {
                 display: none;
             }
-
             .content {
                 padding: 0.75rem;
             }
@@ -218,8 +178,8 @@
             <div id="logo" class="logo">
                 <i class="fas fa-ghost"></i>
                 <span>
-                      <a href="/">SusLinks</a>
-                    </span>
+                    <a href="/">SusLinks</a>
+                </span>
             </div>
             <div id="toggle-btn" class="toggle-btn" onclick="toggleSidebar()">
                 <i class="fa-solid fa-bars"></i>
@@ -249,7 +209,7 @@
             </div>
             <a href="/" class="btn"
                style="background-color: var(--accent); color: var(--text-primary);">
-                <i class="fas fa-user-plus me-2"></i>Add User
+                <i class="fas fa-user-plus me-2"></i>Add Url
             </a>
         </div>
         <div class="table-responsive bg-dark rounded p-3">
@@ -296,95 +256,89 @@
         </div>
     </div>
 </div>
-</div>
 
 <!-- Font Awesome & Bootstrap JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
-    // Registro del Service Worker
-   if ('serviceWorker' in navigator) {
-     navigator.serviceWorker.register('/service-worker.js')
-       .then(reg => {
-         console.log("SW registrado:", reg.scope);
-       })
-       .catch(err => {
-         console.error("SW falló:", err);
-       });
-   }
-   async function cargarUrls() {
-  if (!navigator.onLine) {
-    // offline
-    const guardadas = localStorage.getItem('urlsLocal');
-    if (guardadas) {
-      mostrarLista(JSON.parse(guardadas));
-    } else {
-      alert("No hay datos offline guardados");
+    // IMPORTANT: Add a version parameter to force the browser to re-fetch the SW.
+    // Change it whenever you make significant SW changes.
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js?v=3')
+            .then(reg => {
+                console.log("SW registrado:", reg.scope);
+            })
+            .catch(err => {
+                console.error("SW falló:", err);
+            });
     }
-    return;
-  }
 
-  try {
-    const token = localStorage.getItem('token');
-    const resp = await fetch('/api/urls', {
-      headers: { Authorization: `Bearer ${token}` }
+    async function cargarUrls() {
+        if (!navigator.onLine) {
+            // offline
+            const guardadas = localStorage.getItem('urlsLocal');
+            if (guardadas) {
+                mostrarLista(JSON.parse(guardadas));
+            } else {
+                alert("No hay datos offline guardados");
+            }
+            return;
+        } else {
+            try {
+                const token = localStorage.getItem('token');
+                const resp = await fetch('/api/urls', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                if (!resp.ok) throw new Error(resp.statusText);
+
+                const data = await resp.json();
+                localStorage.setItem('urlsLocal', JSON.stringify(data.urls));
+                mostrarLista(data.urls);
+            } catch (e) {
+                console.log("Error cargando URLs:", e);
+            }
+        }
+    }
+
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const logo = document.getElementById('logo');
+        if (sidebar.classList.contains('expanded')) {
+            sidebar.classList.remove('expanded');
+            sidebar.classList.add('collapsed');
+            logo.style.visibility = 'hidden';
+        } else {
+            sidebar.classList.remove('collapsed');
+            sidebar.classList.add('expanded');
+            logo.style.visibility = 'visible';
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Simplify the displayed URL to domain only
+        const urlCells = document.querySelectorAll("#MainTable [id='TuplaURL']");
+        urlCells.forEach(cell => {
+            try {
+                const fullUrl = cell.textContent.trim();
+                const domain = new URL(fullUrl).origin;
+                cell.textContent = domain;
+            } catch (error) {
+                console.error("Error parsing URL:", cell.textContent, error);
+            }
+        });
     });
-    if (!resp.ok) throw new Error(resp.statusText);
 
-    const data = await resp.json();
-    localStorage.setItem('urlsLocal', JSON.stringify(data.urls));
-    mostrarLista(data.urls);
-  } catch (e) {
-    console.log("Error cargando URLs:", e);
-  }
-}
-
-
-   function toggleSidebar() {
-       const sidebar = document.getElementById('sidebar');
-       const logo = document.getElementById('logo');
-       const togglebtn = document.getElementById('toggle-btn');
-
-       if (sidebar.classList.contains('expanded')) {
-           sidebar.classList.remove('expanded');
-           sidebar.classList.add('collapsed');
-           logo.style.visibility = 'hidden';
-
-       } else {
-           sidebar.classList.remove('collapsed');
-           sidebar.classList.add('expanded');
-           logo.style.visibility = 'visible';
-       }
-   }
-
-   document.addEventListener("DOMContentLoaded", function () {
-       // Select all elements with id 'TuplaURL' inside the MainTable
-       const urlCells = document.querySelectorAll("#MainTable [id='TuplaURL']");
-
-       urlCells.forEach(cell => {
-           try {
-               // Trim and parse the URL to extract the origin (protocol + domain)
-               const fullUrl = cell.textContent.trim();
-               const domain = new URL(fullUrl).origin;
-               // Update the cell's text content with the domain only
-               cell.textContent = domain;
-           } catch (error) {
-               console.error("Error parsing URL:", cell.textContent, error);
-           }
-       });
-   });
-
-   // Add window resize handler to automatically collapse sidebar on small screens
-   window.addEventListener('resize', function() {
-       const sidebar = document.getElementById('sidebar');
-       const logo = document.getElementById('logo');
-
-       if (window.innerWidth <= 768 && sidebar.classList.contains('expanded')) {
-           sidebar.classList.remove('expanded');
-           sidebar.classList.add('collapsed');
-           logo.style.visibility = 'hidden';
-       }
-   });
+    // Auto-collapse on small screens
+    window.addEventListener('resize', function() {
+        const sidebar = document.getElementById('sidebar');
+        const logo = document.getElementById('logo');
+        if (window.innerWidth <= 768 && sidebar.classList.contains('expanded')) {
+            sidebar.classList.remove('expanded');
+            sidebar.classList.add('collapsed');
+            logo.style.visibility = 'hidden';
+        }
+    });
 </script>
 </body>
 </html>

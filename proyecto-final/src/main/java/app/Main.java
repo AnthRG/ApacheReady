@@ -47,7 +47,7 @@ public class Main {
         resolver.setPrefix("templates/");  // SIN la barra inicial "/templates/"
         resolver.setSuffix(".html");
         resolver.setTemplateMode(TemplateMode.HTML);
-        resolver.setCacheable(true); //if cache no worky worky try turn this off
+        resolver.setCacheable(false); //if cache no worky worky try turn this off
         templateEngine.setTemplateResolver(resolver);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
@@ -332,7 +332,7 @@ public class Main {
             boolean recordar = "on".equals(ctx.formParam("recordar"));
             Usuario user = UsuarioServices.getInstance().find(usuario);
 
-            if (user.getPassword().equals(contrasena)) {
+            if (Loggin(usuario, contrasena)) {
                 user = UsuarioServices.getInstance().find(user.getUsername());
                 ctx.sessionAttribute("USUARIO", user);
 
