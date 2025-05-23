@@ -112,4 +112,5 @@ chmod +x gradlew
 ./gradlew bootJar
 
 # Run the Spring Boot app (ensure port matches Apache Proxy)
-java -jar build/libs/app.jar > build/libs/salida.txt 2> build/libs/error.txt &
+java -jar build/libs/ArSpring-0.0.1-SNAPSHOT.jar > build/libs/salida.txt 2> build/lib
+s/error.txt &
