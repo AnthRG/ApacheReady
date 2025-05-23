@@ -49,8 +49,8 @@ sudo bash -c 'cat > /etc/apache2/sites-available/seguro.conf << EOF
     SSLCertificateFile /etc/letsencrypt/live/arblocks.do/fullchain.pem
     SSLCertificateKeyFile /etc/letsencrypt/live/arblocks.do/privkey.pem
 
-    ProxyPass / http://localhost:7070/
-    ProxyPassReverse / http://localhost:7070/
+    ProxyPass / http://localhost:8080/
+    ProxyPassReverse / http://localhost:8080/
 
     <Directory "/var/www/html">
         AllowOverride All
