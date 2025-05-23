@@ -80,8 +80,8 @@ git pull
 chmod +x gradlew
 
 # 🔹 Ejecutar creación del fat JAR con la variable de entorno
-./gradlew shadowjar
+./gradlew bootJar
 
 # 🔹 Iniciar la app en segundo plano con la variable de entorno
-java -jar build/libs/app.jar > build/libs/salida.txt 2> build/libs/error.txt &
+java -jar build/libs/app.jar
 
